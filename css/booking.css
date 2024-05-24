@@ -1,0 +1,212 @@
+*{
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+}
+/* make navbar stayes at the top while other contents are scrolled
+ */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.navbar .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.navbar .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+.navbar .nav-links a {
+    color: #333;
+    text-decoration: none;
+    border: 2px solid #333;
+    padding: 10px;
+    border-radius: 5px;
+    transition: all 0.3s;
+    font-size: 1rem;
+}
+.navbar .nav-links a:hover {
+    background-color: #333;
+    color: #fff;
+}
+.navbar .user-profile{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #007bff;
+    color: white;
+    margin-right: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+.content {
+    max-width: 800px;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+.content h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+.trip-form {
+    margin-bottom: 20px;
+}
+#search-trip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    font-size: 1rem;
+    padding: 10px;
+}
+/* when I click a select button it displays lists please add css on that section */
+.trip-form select {
+    width: 300px;
+    padding: 15px;
+    border: 1px solid #007bff;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    color: #007bff;
+}
+/* now add a css for the option box */
+.trip-form select option {
+    padding: 10px;
+    font-size: 1.2rem;
+    color: #007bff;
+    padding: 10px;
+}
+/* how can I change a color of place holder in css */
+.trip-form input {
+    color: #007bff;
+    width: 300px;
+    padding: 15px;
+    border: 1px solid #007bff;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    margin: 0px 5px;
+    margin-left: 30%;
+}
+.trip-form label {
+    font-size: 1.2rem;
+    font-weight: 700;
+    display: block;
+    margin: 10px;
+}
+.trip-form input[type="date"] {
+    width: 300px;
+    padding: 15px;
+    border: 1px solid #007bff;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    margin-top: 30px;
+}
+.trip-form button {
+    display: block;
+    background-color:#333;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    margin-top: 20px;
+}
+.trip-form .round-trip {
+    justify-self: end;
+}
+.destinations {
+    margin-top: 40px;
+}
+.destinations h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+.destinations .destination-grid {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+.destinations .destination-grid img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+.destinations .destination {
+    text-align: center;
+    flex: 1 1 calc(33.333% - 20px);
+}
+.profile-page{
+    width:300px;
+    height: 100vh;
+    background-color:#007bff;
+    position: absolute;
+    top: 0  ;
+    right: -300px;
+    transition: 0.5s;
+    cursor: pointer;
+}
+.show{
+    right: 0;
+    transition: 0.5s;
+}
+.profile-page ul{
+    list-style: none;
+    padding: 15px;
+}
+.profile-page ul li{
+    margin-bottom: 10px;
+}
+.profile-page ul li a{
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    display: block;
+}
+#close-btn{
+    background-color: white;
+    border-radius: 50%;
+    border: none;
+    margin: 10px;
+    cursor: pointer;
+}
+.footer{
+    margin-top: 20px;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.5s;
+}
