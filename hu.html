@@ -35,7 +35,7 @@
     <h1>Book a trip</h1>
     <div class="trip-form">
         <form action="" method="">
-            <input type="text" name="user-name" placeholder="User name" required>
+            <input type="text" name="user-name" placeholder="User name" disabled>
             <div id="search-trip">
                 <div>
                     <label for="source">From:</label>
@@ -63,7 +63,7 @@
                 </div>
             </div>
             <input type="date" placeholder="Departure date" required>
-            <button>Choose your favorite seats</button>
+            <p id="paragraph-warning">Warnning: <span> If you are not able to pay the cost in 6 hours, your booking status will be canceled automaticaly.</span></p>
             <button onclick="checkRoute()" >Book now</button>
         </form>
     </div>

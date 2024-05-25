@@ -33,11 +33,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':email', $email);
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
+        
+        
         if ($user && password_verify($password, $user['Password'])) {
             // Password is correct, start session and store user info
             $_SESSION['username'] = $user['Username'];
-            header("Location: home.php");
+            $_SESSION['email'] = $user['Email'];
+            $_SESSION['phone'] = $user['Phone'];
+            header("Location: booking.php");
             exit();
         } else {
             $error = "Invalid email or password.";

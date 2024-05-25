@@ -74,6 +74,7 @@ body {
 }
 .trip-form {
     margin-bottom: 20px;
+    height: 100vh;
 }
 #search-trip {
     display: flex;
@@ -116,6 +117,9 @@ body {
     display: block;
     margin: 10px;
 }
+.trip-form label.label{
+    margin-left: 30%;
+}
 .trip-form input[type="date"] {
     width: 300px;
     padding: 15px;
@@ -135,13 +139,29 @@ body {
     border: 1px solid #ccc;
     border-radius: 10px;
     font-size: 1.2rem;
-    margin-top: 20px;
+    margin-top: 40px;
+}
+#paragraph-warning {
+    color: rgb(179, 26, 26);
+    font-family:cursive;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 50px;
+}
+#paragraph-warning span{
+    color: #333;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-indent: 80px;
+    margin-top: -25px;
+    text-align: center;
+    display: block;
 }
 .trip-form .round-trip {
     justify-self: end;
 }
 .destinations {
-    margin-top: 40px;
+    margin-top: 200px ;
+    height: 100vh;
 }
 .destinations h2 {
     font-size: 1.5rem;
