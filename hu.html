@@ -14,7 +14,7 @@
         <a href="#">Draft</a>
         <a href="#">My Booking</a>
         <a href="#">Help</a>
-        <a href="#footer">Contact Us</a>
+        <a href="#footer" id="contact">Contact Us</a>
     </div>
     <div class="user-profile" id="show-profie">
        ZE
@@ -23,7 +23,7 @@
         <button id="close-btn">X</button>
         <ul>
             <li><a href="Profile.html">Profile</a></li>
-            <li><a href="#footer">Contact Us</a></li>
+            <li><a href="#footer" id="contact2">Contact Us</a></li>
             <li><a href="#">Help</a></li>
             <li><a href="#">My Bookings</a></li>
             <li><a href="#">Logout</a></li>
@@ -166,6 +166,11 @@
         if (e.target !== showProfile && e.target !== profilePage) {
             profilePage.classList.remove('show');
         }
+    });
+
+    document.querySelector('#contact').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.querySelector('#footer').scrollIntoView({ behavior: 'smooth' });
     });
 
 </script>
