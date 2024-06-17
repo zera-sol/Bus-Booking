@@ -18,6 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $phone = $_POST['phone'];
     $password = $_POST['password'];
     $cpassword = $_POST['cpassword'];
+    $role = "user";
 
     if (empty($fname) || empty($email) || empty($uname) || empty($phone) || empty($password) || empty($cpassword)) {
         $error = "All fields are required.";
@@ -38,13 +39,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $error = "Username already exists.";
         } else {
             // Insert new user into database
-            $stmt = $conn->prepare("INSERT INTO Users (Username, Password, Name, Phone, Email) VALUES (:uname, :password, :fname, :phone, :email)");
+            $stmt = $conn->prepare("INSERT INTO Users (Username, Password, Name, Phone, Email, role) VALUES (:uname, :password, :fname, :phone, :email, :role)");
             $stmt->bindParam(':uname', $uname);
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             $stmt->bindParam(':password', $hashed_password);
             $stmt->bindParam(':fname', $fname);
             $stmt->bindParam(':phone', $phone);
             $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':role', $role);
 
             if ($stmt->execute()) {
                 // Get the user ID of the newly registered user
