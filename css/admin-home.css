@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f9f9f9;
+    background-color: #ffffff;
 }
 
 .container {
@@ -15,8 +15,8 @@ header {
     justify-content: space-between;
     align-items: center;
     background-color: inherit;
-    padding: 10px 20px;
-    border-bottom: 1px solid rgb(195, 195, 195);
+    padding: 10px 20px ;
+    border-bottom: 1px solid #f4efe6;
 }
 .navBar{
     width: 100%;
@@ -73,7 +73,7 @@ h1 {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border:1px solid #e9dfce;
     text-align: center;
     flex: 1;
     margin: 0 10px;
@@ -88,26 +88,30 @@ h1 {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border:1px solid #e9dfce;
 }
 
 .tabs {
     display: flex;
     margin-bottom: 20px;
+    padding: 5px;
+    background-color:#f4deb5;
+    border-radius: 10px;
 }
-
 .tab {
     flex: 1;
-    padding: 10px;
-    background-color: #f0f0f0;
+    padding: px;
     border: none;
     cursor: pointer;
-    text-align: center;
+    text-align: center;    
+    background-color: #f4deb5;
 }
 
 .tab.active {
-    background-color: #ddd;
+    background-color: #fff;
     font-weight: bold;
+    border-radius: 10px;
+    padding: 5px;
 }
 
 .tab-content {
@@ -147,4 +151,38 @@ th, td {
 .status.pending {
     background-color: #ffecb3;
     color: #fbc02d;
+}
+footer{
+    max-width: 600px;
+    margin: 25px auto 10px;
+}
+footer #terms{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+footer #terms a{
+    color:#a1824b;
+    text-decoration: none;
+    font-size: 1.3rem;
+    padding: 10px;
+}
+footer #socialMediaIcons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: #a1824b;
+}
+footer #socialMediaIcons a{
+    color:#a1824b;
+    text-decoration: none;
+    font-size: 1.5rem;
+    padding: 10px;
+}
+footer h2{
+    color:#a1824b;
+    text-align: center;
+    font-size: 15px;
+    font-family: sans-serif;
 }
