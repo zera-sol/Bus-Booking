@@ -37,10 +37,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         if ($user && password_verify($password, $user['Password'])) {
             // Password is correct, start session and store user info
-            $_SESSION['username'] = $user['Username'];
-            $_SESSION['email'] = $user['Email'];
-            $_SESSION['phone'] = $user['Phone'];
-            header("Location: booking.php");
+            $_SESSION['id'] = $user['UserID'];
+            header("Location: homeloggedin.php");
             exit();
         } else {
             $error = "Invalid email or password.";

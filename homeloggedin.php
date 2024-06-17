@@ -1,3 +1,30 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['id'])) {
+    header("Location: login.php");
+    exit();
+}
+// Assuming 'id' is the session variable set upon login
+$user_logged_in = isset($_SESSION['id']);
+$id = $_SESSION["id"];
+require_once './database/database.php';
+
+// Create an instance of the Database class
+$database = new Database();
+$conn = $database->conn;
+
+$stmt = $conn->prepare("SELECT * FROM Users WHERE UserID = :userid");
+$stmt->bindParam(':userid', $id);
+$stmt->execute();
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$username = $user['Username'];
+$deposit = $user['Deposit'];
+
+// Take username's first two letters, capitalize them, and store them in a variable called $initials
+$initials = strtoupper(substr($username, 0, 2));
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,16 +39,14 @@
 <body>
     <div class="navbar">
         <div class="logo">Travel Express</div>
-        <div class="book-ticket" style="margin-left: 150px;"><a href="login.php">Deposit</a></div>
-        <div class="book-ticket" style="margin-left: 30px;"><a href="login.php">My bookings</a></div>
-        <div class="search-bar">
-        </div>
-        <div class="ml-auto">
+        <div class="book-ticket" style="margin-left: 150px;"><a href="deposit.php">Deposit</a></div>
+        <div class="book-ticket" style="margin-left: 30px;"><a href="mybooking.php">My bookings</a></div>
+        <div class="ml-auto luu" style="width:500px; display: flex; gap:25px; align-items:center;">
             <a href="#" class="btn btn-outline-primary mr-2">Help</a>
-            <a href="#footer" class="btn btn-outline-primary mr-2">Contact</a>
-            <a href="login.php" class="btn btn-primary mr-2">Sign In</a>
-            <a href="register.php" class="btn btn-secondary">Sign Up</a>
-            
+            <a href="#footer" class="btn btn-outline-primary mr-2">Contact</a>            
+            <a href="home.php" class="btn btn-secondary">Logout</a>
+            <div style="border-radius: 50%; padding: 10px; background-color:blue; color:white; font-weight:bold;"> <?php echo htmlspecialchars($initials); ?></div>
+            <div id="balance" style=" color: green; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-weight: bold;"> ETB <?php echo htmlspecialchars($deposit); ?></div>
         </div>
     </div>
     <hr/>
@@ -32,6 +57,7 @@
             <div class="hero-text mt-5">Travel by bus with BusGo</div>
         <div class="hero-subtext mt-5">Book tickets, track your bus in real time and earn points</div>
         <div class="hero-search input-group mt-3 mx-auto">
+            <a href="booking.php" class="btn btn-primary mt-5 p-2" style="margin-left:50%;" >Book now</a>
         </div>
         </div>
     </div>

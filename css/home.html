@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BusGo</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">Travel Express</div>
+        <div class="book-ticket" style="margin-left: 150px;"><a>E-Ticket</a></div>
+        <div class="book-ticket" style="margin-left: 30px;"><a>My bookings</a></div>
+        <div class="search-bar">
+        </div>
+        <div class="ml-auto">
+            <a href="#" class="btn btn-outline-primary mr-2">Help</a>
+            <a href="#" class="btn btn-outline-primary mr-2">Contact Us</a>
+            <a href="#" class="btn btn-primary mr-2">Sign In</a>
+            <a href="#" class="btn btn-secondary">Sign Up</a>
+        </div>
+        <!-- <div class="user-profile">
+            <img src="/path/to/user-profile.png" alt="User Profile">
+        </div> -->
+    </div>
+    
+    <!-- <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+             <img src="logo-placeholder.png" alt="BusGo Logo" width="30" height="30">
+            Travel Express
+        </a>
+        <div class="ml-auto">
+            <a href="#" class="btn btn-outline-primary mr-2">Help</a>
+            <a href="#" class="btn btn-outline-primary mr-2">Contact Us</a>
+            <a href="#" class="btn btn-primary mr-2">Sign In</a>
+            <a href="#" class="btn btn-secondary">Sign Up</a>
+        </div>
+    </nav> -->
+    <hr/>
+    <div class="container hero-section text-center">
+        <img src="https://static.vecteezy.com/system/resources/previews/026/977/278/large_2x/bus-of-a-beautiful-transportation-with-futuristic-design-ai-generated-photo.jpg" 
+        class="img-fluid" alt="Bus Image">
+        <div>
+            <div class="hero-text">Travel by bus with BusGo</div>
+        <div class="hero-subtext">Book tickets, track your bus in real time and earn points</div>
+        <div class="hero-search input-group mt-3 mx-auto">
+            <div class="hero-search-container">
+            <select class="select-city" id="myDropdown">
+                <option value="">Leaving from</option>
+                <option value="option1">Addis Ababa</option>
+                <option value="option3">Arbaminch</option>
+                <option value="option3">Bahirdar</option>
+                <option value="option3">Diredawa</option>
+                <option value="option3">Gonder</option>
+                <option value="option2">Harer</option>
+                <option value="option3">Hossana</option>
+              </select>
+            <button style="border: none;">
+            <img src="https://i.ibb.co/tppx0Cn/two-arrows.png" style="height: 30px; width: 30px;"/>
+
+            </button>
+            <select class="select-city" id="myDropdown">
+                <option value="">Destination</option>
+                <option value="option1">Addis Ababa</option>
+                <option value="option3">Arbaminch</option>
+                <option value="option3">Bahirdar</option>
+                <option value="option3">Diredawa</option>
+                <option value="option3">Gonder</option>
+                <option value="option2">Harer</option>
+                <option value="option3">Hossana</option>
+              </select>
+            </div>
+            <label style="font-weight: bold;">Departure date</label>
+            <input class="date-input" type="date" placeholder="Departure date"/>
+            
+            <div class="input-group-append">
+                <button style="position: absolute; top: 60px; right: 0px;" class="btn btn-primary" type="button">Search</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    
+    <div class="container features-section">
+        <h2 class="hero-text">Why BusGo</h2>
+        <p class="text-muted mb-5">We're here to help you travel comfortably and safely.</p>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card feature-card">
+                    <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                    class="card-img-top" alt="On-time guarantee">
+                    <div class="card-body text-center">
+                        <div class="feature-card-title">On-time guarantee</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card feature-card">
+                    <img src="https://images.unsplash.com/photo-1572016047668-5b5e909e1605?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                    class="card-img-top" alt="Real-time tracking">
+                    <div class="card-body text-center">
+                        <div class="feature-card-title">Real-time tracking</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card feature-card">
+                    <img src="https://plus.unsplash.com/premium_photo-1671462505492-03f9682bff61?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                    class="card-img-top" alt="Free Wi-Fi and power outlets">
+                    <div class="card-body text-center">
+                        <div class="feature-card-title">Free Wi-Fi and power outlets</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="container features-section">
+        <h2 class="hero-text">Popular Routes</h2>
+        <p class="text-muted mb-5">We're here to help you travel comfortably and safely.</p>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card feature-card">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Addis_abeba_meskele_square_%28cropped%29.jpg/272px-Addis_abeba_meskele_square_%28cropped%29.jpg" 
+                    class="card-img-top" alt="On-time guarantee">
+                    <div class="card-body text-center">
+                        <div class="feature-card-title">Addis Ababa</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card feature-card">
+                    <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/59/a7/bd/l-hotel-domine-le-lac.jpg?w=1400&h=1400&s=1" 
+                    class="card-img-top" alt="Real-time tracking">
+                    <div class="card-body text-center">
+                        <div class="feature-card-title">Hawassa</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card feature-card">
+                    <img src="https://borkena.com/wp-content/uploads/2024/03/Bahir-Dar-Security-Update.jpg" 
+                    class="card-img-top" alt="Free Wi-Fi and power outlets" style="height: 270px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <div class="feature-card-title">Bahirdar</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card feature-card">
+                    <img src="https://www.historyhit.com/app/uploads/2020/11/Harar-Jugol.jpg" 
+                    class="card-img-top" alt="On-time guarantee">
+                    <div class="card-body text-center">
+                        <div class="feature-card-title">Harar</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card feature-card">
+                    <img src="https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcSnh6RWdB1MxRneRHdU3zETh57UbgD6saX9AhNZ7FnJT3sU7CLx7bA03dnBp0DFdA13T1fWmycG1K_YEZ4EZ7eJMicRb1K2D1O5o1LuBQ" 
+                    class="card-img-top" alt="On-time guarantee">
+                    <div class="card-body text-center">
+                        <div class="feature-card-title">Gonder</div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <img src="path-to-logo.png" alt="Logo" class="footer-logo">
+                <p>Brief description about the company.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Useful Links</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul class="social-media">
+                    <li><a href="#"><img src="https://i.ibb.co/GcmzZjQ/facebook-1.png" alt="Facebook"></a></li>
+                    <li><a href="#"><img src="https://i.ibb.co/0nfTpK5/twitter.png" alt="Twitter"></a></li>
+                    <li><a href="#"><img src="https://i.ibb.co/bNXVKYM/social.png" alt="Instagram"></a></li>
+                    <li><a href="#"><img src="https://i.ibb.co/j8SGRsk/linkedin.png" alt="LinkedIn"></a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <p>1234 Street Name, City, State, 56789</p>
+                <p>Phone: (123) 456-7890</p>
+                <p>Email: info@example.com</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

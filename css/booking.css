@@ -9,59 +9,53 @@ body {
 }
 /* make navbar stayes at the top while other contents are scrolled
  */
-.navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
+ 
+.navbar-light .navbar-brand, .navbar-light .navbar-nav .nav-link {
+    color: black;
 }
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+.navbar-light .navbar-brand:hover, .navbar-light .navbar-nav .nav-link:hover {
+    color: #6c757d;
 }
 .navbar .logo {
     font-size: 1.5rem;
     font-weight: bold;
 }
-.navbar .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 50px;
+.btn-outline-primary {
+    color: black;
+    border-color: black;
 }
-.navbar .nav-links a {
-    color: #333;
-    text-decoration: none;
-    border: 2px solid #333;
-    padding: 10px;
-    border-radius: 5px;
-    transition: all 0.3s;
-    font-size: 1rem;
-}
-.navbar .nav-links a:hover {
-    background-color: #333;
-    color: #fff;
-}
-.navbar .user-profile{
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #007bff;
+.btn-outline-primary:hover {
+    background-color: black;
     color: white;
-    margin-right: 75px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    font-size: 1.2rem;
+}
+.btn-primary {
+    background-color: black;
+    border-color: black;
+}
+.btn-primary:hover {
+    background-color: #333;
+    border-color: #333;
+}
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+.book-ticket{
+    font-size: 17px;   
+}
+.book-ticket:hover{
+    background-color: black;
+    border-radius: 5px;
+    color: white;
+    padding: 8px;
 }
 .content {
     max-width: 800px;
-    margin: 100px auto;
+    margin: 50px auto;
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
@@ -74,7 +68,6 @@ body {
 }
 .trip-form {
     margin-bottom: 20px;
-    height: 100vh;
 }
 #search-trip {
     display: flex;
@@ -91,18 +84,18 @@ body {
     border: 1px solid #007bff;
     border-radius: 10px;
     font-size: 1.2rem;
-    color: #007bff;
+    color: #333;
 }
 /* now add a css for the option box */
 .trip-form select option {
     padding: 10px;
     font-size: 1.2rem;
-    color: #007bff;
+    color: #333;
     padding: 10px;
 }
 /* how can I change a color of place holder in css */
 .trip-form input {
-    color: #007bff;
+    color: #333;
     width: 300px;
     padding: 15px;
     border: 1px solid #007bff;
@@ -229,4 +222,16 @@ body {
     justify-content: space-between;
     align-items: center;
     transition: 0.5s;
+}
+#profile{
+    display: flex;
+    gap: 20px ;
+    justify-content: center;
+    align-items: center;
+}
+#deposit{
+    color: green;
+}
+#deposit span{
+    color: white;
 }

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Travel Express</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
      <link rel="stylesheet" href="./css/booking.css">
 </head>
 <body>
@@ -35,7 +36,7 @@
     <h1>Book a trip</h1>
     <div class="trip-form">
         <form action="" method="">
-            <input type="text" name="user-name" placeholder="User name" disabled>
+            <input type="text" name="user-name" placeholder="User name" >
             <div id="search-trip">
                 <div>
                     <label for="source">From:</label>
@@ -62,9 +63,98 @@
                     </select>
                 </div>
             </div>
-            <input type="date" placeholder="Departure date" required>
+            <input type="date" placeholder="Departure date" required> 
+            <button onclick="checkRoute()" >Choose your favorite seat Number</button>
+        <div class="after-chair">
+            <div class="seat-Number">
+                <div class="seats">
+                    <div>
+                        <i class="fa-solid fa-chair" value="1"></i>
+                        <i class="fa-solid fa-chair" value="2"></i>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-chair" value="5"></i>
+                        <i class="fa-solid fa-chair" value="6"></i>
+                    </div><div>
+                        <i class="fa-solid fa-chair" value="9"></i>
+                        <i class="fa-solid fa-chair" value="10"></i>
+                    </div><div>
+                        <i class="fa-solid fa-chair" value="13"></i>
+                        <i class="fa-solid fa-chair" value="14"></i>
+                    </div><div>
+                        <i class="fa-solid fa-chair" value="17"></i>
+                        <i class="fa-solid fa-chair" value="18"></i>
+                    </div><div>
+                        <i class="fa-solid fa-chair" value="21"></i>
+                        <i class="fa-solid fa-chair" value="22"></i>
+                    </div><div>
+                        <i class="fa-solid fa-chair" value="25"></i>
+                        <i class="fa-solid fa-chair" value="26"></i>
+                    </div><div>
+                        <i class="fa-solid fa-chair" value="29"></i>
+                        <i class="fa-solid fa-chair" value="30"></i>
+                    </div><div>
+                        <i class="fa-solid fa-chair" value="33"></i>
+                        <i class="fa-solid fa-chair" value="34"></i>
+                    </div><div>
+                        <i class="fa-solid fa-chair" value="37"></i>
+                        <i class="fa-solid fa-chair" value="38"></i>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-chair" value="41"></i>
+                        <i class="fa-solid fa-chair" value="42"></i>
+                    </div>                    
+                </div>
+                <div class="seats">
+                    <div>
+                        <i class="fa-solid fa-chair" value="3"></i>
+                        <i class="fa-solid fa-chair" value="4"></i>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-chair" value="7"></i>
+                        <i class="fa-solid fa-chair" value="8"></i>
+                    </div><div>
+                        <i class="fa-solid fa-chair" value="11"></i>
+                        <i class="fa-solid fa-chair" value="12"></i>
+                    </div><div>
+                        <i class="fa-solid fa-chair" value="15"></i>
+                        <i class="fa-solid fa-chair" value="16"></i>
+                    </div><div>
+                        <i class="fa-solid fa-chair" value="19"></i>
+                        <i class="fa-solid fa-chair" value="20"></i>
+                    </div><div>
+                        <i class="fa-solid fa-chair" value="23"></i>
+                        <i class="fa-solid fa-chair" value="24"></i>
+                    </div><div>
+                        <i class="fa-solid fa-chair" value="27"></i>
+                        <i class="fa-solid fa-chair" value="28"></i>
+                    </div><div>
+                        <i class="fa-solid fa-chair" value="31"></i>
+                        <i class="fa-solid fa-chair" value="32"></i>
+                    </div><div>
+                        <i class="fa-solid fa-chair" value="35"></i>
+                        <i class="fa-solid fa-chair" value="36"></i>
+                    </div><div>
+                        <i class="fa-solid fa-chair" value="39"></i>
+                        <i class="fa-solid fa-chair" value="40"></i>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-chair" value="43"></i>
+                        <i class="fa-solid fa-chair" value="44"></i>
+                    </div>                    
+                </div>
+            </div>
+            <div class="last-seat">
+                <i class="fa-solid fa-chair" value="45"></i>
+                <i class="fa-solid fa-chair" value="46"></i>
+                <i class="fa-solid fa-chair" value="47"></i>
+                <i class="fa-solid fa-chair" value="48"></i>
+                <i class="fa-solid fa-chair" value="49"></i>
+                <i class="fa-solid fa-chair" value="50"></i>
+            </div>
             <p id="paragraph-warning">Warnning: <span> If you are not able to pay the cost in 6 hours, your booking status will be canceled automaticaly.</span></p>
             <button onclick="checkRoute()" >Book now</button>
+        </div>
         </form>
     </div>
     <div class="destinations">
@@ -133,6 +223,12 @@
 
 
 <script>
+    //when font awesome icon is clicked change a color in to another format using jquary
+    document.querySelector('.fa-chair').addEventListener('click', function() {
+        this.style.color = 'red';
+        alert(this.getAttribute('value'));
+    });
+
     // Write a javasctipt code that checkes whether one of the value among the two select section must be 1 else alert there is no route in from the source to destination and disable the book now button and the select sections should not be 0
     const source = document.querySelector('select[name="source"]');
     const destination = document.querySelector('select[name="destination"]');

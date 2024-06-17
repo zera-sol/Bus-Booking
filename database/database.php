@@ -16,7 +16,7 @@ class Database {
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
             // Connection successful message
-            echo "Connected successfully <br />";
+            echo "";
         } catch(PDOException $e) {
             // Catch any connection errors and display the error message
             echo "Connection failed: " . $e->getMessage();
