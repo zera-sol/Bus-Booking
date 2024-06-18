@@ -5,6 +5,10 @@ if (!isset($_SESSION['id'])) {
     header("Location: login.php");
     exit();
 }
+else if($_SESSION['role'] != 'user'){
+    header("Location: login.php");
+    exit();
+}
 
 require_once './database/database.php';
 

@@ -39,11 +39,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if($user['role'] == "user"){
                 // Password is correct, start session and store user info
             $_SESSION['id'] = $user['UserID'];
+            $_SESSION['role'] = $user['role'];
             header("Location: homeloggedin.php");
             exit();
             }
             else if($user['role'] == "admin"){
                 $_SESSION['id'] = $user['UserID'];
+                $_SESSION['role'] = $user['role'];
                 header("Location: admin-home.php");
                 exit(); 
             }            

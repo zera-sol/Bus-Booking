@@ -7,6 +7,10 @@
         header("Location: booking.php");
         exit();
     }
+    else if($_SESSION['role'] != 'user'){
+        header("Location: login.php");
+        exit();
+    }
     // Retrieve the booking ID
     $bookingID = $_SESSION['booking_id'];
 

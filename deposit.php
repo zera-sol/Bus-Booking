@@ -5,8 +5,13 @@ if (!isset($_SESSION['id'])) {
     header("Location: login.php");
     exit();
 }
+else if($_SESSION['role'] != 'user'){
+    header("Location: login.php");
+    exit();
+}
 
 require_once './database/database.php';
+$id = $_SESSION['id'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Create an instance of the Database class
@@ -21,11 +26,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $receiptContent = file_get_contents($receipt);
 
     // Prepare the SQL statement
-    $query = "INSERT INTO deposit (Amount, Receipt, IsVerified) VALUES (:amount, :receipt, :isVerified)";
+    $query = "INSERT INTO deposit (Amount, Receipt, IsVerified, UserID) VALUES (:amount, :receipt, :isVerified, :id)";
     $stmt = $conn->prepare($query);
     $stmt->bindParam(':amount', $amount);
     $stmt->bindParam(':receipt', $receiptContent, PDO::PARAM_LOB);
     $stmt->bindValue(':isVerified', false, PDO::PARAM_BOOL);
+    $stmt->bindParam(':id', $id);
 
     // Execute the statement
     if ($stmt->execute()) {
@@ -47,16 +53,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="./css/booking.css">
     <link rel="stylesheet" href="./css/home.css">
     <link rel="stylesheet" href="./css/deposit.css">
+    <link rel="stylesheet" href="./css/navbar.css">
 </head>
 <body>
-    <div class="navbar">
-        <div class="logo">Travel Express</div>
-        <div class="book-ticket" style="margin-left: 150px;"><a href="#">Deposit</a></div>
-        <div class="book-ticket" style="margin-left: 30px;"><a href="mybooking.php">My bookings</a></div>
-        <div class="ml-auto luu" style="width:500px; display: flex; gap:25px; align-items:center;">
-            <a href="homeloggedin.php" class="btn btn-outline-primary mr-2 btn-secondary">Home</a>
-            <a href="#" class="btn btn-outline-primary mr-2 btn-secondary">Help</a>
-            <a href="#footer" class="btn btn-outline-primary mr-2 btn-secondary">Contact</a></div>
+   <!-- NavBars of a User -->
+   <div class="navbar">
+        <div class="logo" style="font-weight: bold; font-size: 1.5rem;">Travel Express</div>
+        <div class="laa" style="margin-left: 120px; padding: 5px; border-radius: 5px;"><a href="deposit.php" style="text-decoration: none;">Deposit</a></div>
+        <div class="laa" style="margin-left: 30px; padding: 5px; border-radius: 5px;"><a href="mybooking.php" style="text-decoration: none;">My bookings</a></div>
+        <div class="luu" style="width:500px; display: flex; gap:35px; align-items:center; margin-left: 250px;">
+            <a href="edit-user.php" class="not-logout">Profile</a>
+            <a href="#footer" class="not-logout">Contact</a>            
+            <a href="logout.php" style=" background-color: rgb(76, 76, 76); color: white;">Logout</a>
+            <div style="border-radius: 50%; padding: 10px; background-color:#007bff; color:white; font-weight:bold;">ZH</div>
+            <div id="balance" style=" color: green; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-weight: bold;"> ETB 45000</div>
+        </div>
     </div>
     <hr/>
     <div class="upload-container" style="margin-top: 50px;">
@@ -76,6 +87,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <button type="submit" class="btn btn-primary btn-block">Upload</button>
         </form>
     </div>
+
+     <!-- Footer section of a user -->
+     <footer class="container footer-section" id="footer">
+        <div class="row">
+            <div class="row-box">
+                <div class="footer-title">About Us</div>
+                <ul class="list-unstyled">
+                    <li><a href="#">Company Information</a></li>
+                    <li><a href="#">Career Opportunities</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                </ul>
+            </div>
+            <div class="row-box">
+                <div class="footer-title">Support</div>
+                <ul class="list-unstyled">
+                    <li><a href="#">Customer Service</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Report an Issue</a></li>
+                    <li><a href="#">Travel Alerts</a></li>
+                </ul>
+            </div>
+            <div class="row-box">
+                <div class="footer-title">Contact Us</div>
+                <ul class="list-unstyled">
+                    <li><a href="#">Email Us</a></li>
+                    <li><a href="#">Call Us</a></li>
+                    <li><a href="#">Follow Us</a></li>
+                    <li><a href="#">Locations</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="bottom-text">
+            &copy; 2023 Travel Express. All rights reserved.
+        </div>
+    </footer>
 </body>
 </html>
 
