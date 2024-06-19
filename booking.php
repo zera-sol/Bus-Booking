@@ -91,22 +91,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BusGo</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./css/home.css">
+    <link rel="stylesheet" href="./css/navbar.css">
     <link rel="stylesheet" href="./css/booking.css">
     
 </head>
 <body>
-    <div class="navbar">
-        <div class="logo">Travel Express</div>
-        <div class="book-ticket" style="margin-left: 150px;"><a href="deposit.php">Deposit</a></div>
-        <div class="book-ticket" style="margin-left: 30px;"><a href="mybooking.php">My bookings</a></div>
-        <div class="ml-auto luu" style="width:500px; display: flex; gap:25px; align-items:center;">
-            <a href="homeloggedin.php" class="btn btn-outline-primary mr-2 btn-secondary">Home</a>
-            <a href="#" class="btn btn-outline-primary mr-2 btn-secondary">Help</a>
-            <a href="#footer" class="btn btn-outline-primary mr-2 btn-secondary">Contact</a> 
-            <div style="border-radius: 50%; padding: 10px; background-color:blue; color:white; font-weight:bold;"> <?php echo htmlspecialchars($initials); ?></div>
+      <!-- Nav bar -->
+<div class="navbar">
+        <div class="logo" style="font-weight: bold; font-size: 1.5rem;">Travel Express</div>
+        <div class="laa" style="margin-left: 120px; padding: 5px; border-radius: 5px;"><a href="deposit.php" style="text-decoration: none;">Deposit</a></div>
+        <div class="laa" style="margin-left: 30px; padding: 5px; border-radius: 5px;"><a href="mybooking.php" style="text-decoration: none;">My bookings</a></div>
+        <div class="luu" style="width:500px; display: flex; gap:35px; align-items:center; margin-left: 400px;">
+            <a href="edit-user.php" class="not-logout">Profile</a>
+            <a href="#footer" class="not-logout">Contact</a>            
+            <a href="home.php" style=" background-color: rgb(76, 76, 76); color: white;">Logout</a>
+            <div style="border-radius: 50%; padding: 10px; background-color:rgb(0, 0, 226); color:white; font-weight:bold;"><?php echo htmlspecialchars($initials); ?></div>
             <div id="balance" style=" color: green; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-weight: bold;"> ETB <?php echo htmlspecialchars($deposit); ?></div>
         </div>
     </div>
@@ -201,54 +200,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </div>
             </div>
-            <div class="footer" id="footer">
-                <div class="contact">
-                    <h3>Contact Us</h3>
-                    <p>Phone: +251-911-111-111</p>
-                    <p>Email: traveExpreSs@gmail.org</p>
-                    <p>Address: Addis Ababa, Ethiopia</p>
-                    <p>&copy;2021 Travel Express. All rights reserved</p>
-                </div>
-                <div>
-                    <h3>Follow Us</h3>
-                    <p>Facebook</p>
-                    <p>Twitter</p>
-                    <p>Instagram</p>
-                    <p>LinkedIn</p>
-                </div>
-                <div>
-                    <h3>Quick Links</h3>
-                    <p>Home</p>
-                    <p>Book a trip</p>
-                    <p>My Booking</p>
-                    <p>Help</p>
-                </div>
+ <!-- Footer section of a user -->
+ <footer class="container footer-section" id="footer">
+        <div class="row">
+            <div class="row-box">
+                <div class="footer-title">About Us</div>
+                <ul class="list-unstyled">
+                    <li><a href="#">Company Information</a></li>
+                    <li><a href="#">Career Opportunities</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                </ul>
+            </div>
+            <div class="row-box">
+                <div class="footer-title">Support</div>
+                <ul class="list-unstyled">
+                    <li><a href="#">Customer Service</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Report an Issue</a></li>
+                    <li><a href="#">Travel Alerts</a></li>
+                </ul>
+            </div>
+            <div class="row-box">
+                <div class="footer-title">Contact Us</div>
+                <ul class="list-unstyled">
+                    <li><a href="#">Email Us</a></li>
+                    <li><a href="#">Call Us</a></li>
+                    <li><a href="#">Follow Us</a></li>
+                    <li><a href="#">Locations</a></li>
+                </ul>
             </div>
         </div>
-
-        <script>
-            const showProfile = document.getElementById('show-profile');
-            const profilePage = document.querySelector('.profile-page');
-            const closeBtn = document.getElementById('close-btn');
-
-            showProfile.addEventListener('click', () => {
-                profilePage.classList.toggle('show');
-            });
-
-            closeBtn.addEventListener('click', () => {
-                profilePage.classList.remove('show');
-            });
-
-            window.addEventListener('click', (e) => {
-                if (e.target !== showProfile && !showProfile.contains(e.target) && e.target !== profilePage && !profilePage.contains(e.target)) {
-                    profilePage.classList.remove('show');
-                }
-            });
-
-            document.querySelector('#contact').addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelector('#footer').scrollIntoView({ behavior: 'smooth' });
-            });
-        </script>
+        <div class="bottom-text">
+            &copy; 2023 Travel Express. All rights reserved.
+        </div>
+    </footer>
+            
         </body>
         </html>

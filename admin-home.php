@@ -1,7 +1,6 @@
 <?php
 session_start();
-
-if (!isset($_SESSION['id'])) {
+if (!isset($_SESSION['id']) || $_SESSION['role'] != 'admin') {
     header("Location: login.php");
     exit();
 }
@@ -92,6 +91,7 @@ $stmt->bindParam(':tomorrow', $tomorrow);
 $stmt->execute();
 $upcomingBookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -114,9 +114,9 @@ $upcomingBookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="navBar">
                 <div class="logo">Travel Express Admin</div>
                 <nav>
-                    <a href="#">Dashboard</a>
-                    <a href="#">Check Booking</a>
-                    <a href="#">Verify Deposit</a>
+                    <a href="admin-home.php">Dashboard</a>
+                    <a href="admin-bookings.php">Check Bookings</a>
+                    <a href="admin-verify.php">Verify Deposit</a>
                     <a href="#">Manage Route</a>
                     <div class="profile-pic"><?php echo htmlspecialchars($initials); ?></div>
                 </nav>

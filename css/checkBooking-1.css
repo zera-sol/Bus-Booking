@@ -1,0 +1,215 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #ffffff;
+    color: #333;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: inherit;
+    padding: 10px 20px ;
+    border-bottom: 1px solid #f4efe6;
+}
+.navBar{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+}
+
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #333;
+}
+
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color:rgb(19, 139, 204);
+    color: white;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.25rem 10rem 1.25rem 10rem ;
+
+}
+
+.container {
+    background-color: #fff;
+    padding-top: 40px;
+    border-radius: 8px;
+    text-align: center;
+    width: 80%;
+    max-width: 1000px;
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    text-align: left;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+form input {
+    margin: 7px;
+    padding: 15px;
+    border: none;
+    border-radius: 4px;
+    width: 40%;
+    background-color: #F4EFE6;
+    color: #1C160C;
+}
+
+form input:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    border: none;
+}
+
+form input::placeholder {
+    color: #A18249;
+}
+
+form button {
+    background-color: #019863;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 45%;
+}
+
+form button:hover {
+    background-color: #218838;
+}
+
+.table-container {
+    display: flex;
+    overflow: hidden;
+    border: 1px solid #E9DFCE;
+    background-color: #FFFFFF;
+    border-radius: 0.75rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table thead {
+    background-color: #ffffff;
+}
+
+table tr {
+    border-top: 1px solid #E9DFCE;
+}
+
+table th, table td {
+    padding: 13px;
+    text-align: left;
+    font-size: 0.875rem;
+}
+
+table td {
+    color: #A18249;
+}
+
+.table-head {
+    border: none;
+    color: #1C160C;
+}
+
+.status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    color: #fff;
+}
+
+.status.paid {
+    background-color: #28a745;
+    width: 90%;
+    text-align: center;
+}
+
+.status.pending {
+    background-color: #ffc107;
+}
+
+.status.in-progress {
+    background-color: #17a2b8;
+}
+
+.status.cancelled {
+    background-color: #dc3545;
+}
+footer{
+    max-width: 600px;
+    margin: 25px auto 10px;
+}
+footer #terms{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+footer #terms a{
+    color:#a1824b;
+    text-decoration: none;
+    font-size: 1.3rem;
+    padding: 10px;
+}
+footer #socialMediaIcons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: #a1824b;
+}
+footer #socialMediaIcons a{
+    color:#a1824b;
+    text-decoration: none;
+    font-size: 1.5rem;
+    padding: 10px;
+}
+footer h2{
+    color:#a1824b;
+    text-align: center;
+    font-size: 15px;
+    font-family: sans-serif;
+}

@@ -21,7 +21,7 @@ $conn = $database->conn;
 
 // Retrieve all bookings for the logged-in user with paymentStatus = 'paid'
 $query = "
-    SELECT b.BookingID, b.DepartureDate, r.Source, r.Destination, r.Cost, u.Username
+    SELECT b.BookingID, b.DepartureDate, b.SeatNumber, r.Source, r.Destination, r.Cost, u.Name
     FROM bookings b
     JOIN routes r ON b.RouteID = r.RouteID
     JOIN Users u ON b.UserID = u.UserID
@@ -51,6 +51,7 @@ function calculateDaysLeft($departureDate) {
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/navbar.css">
+    <link rel="stylesheet" href="./css/mybooking.css">
 </head>
 <body>
       <!-- NavBars of a User -->
@@ -83,22 +84,32 @@ function calculateDaysLeft($departureDate) {
             $price = $cost - $tax;
             ?>
             <div class="ticket <?php echo $isExpired ? 'expired' : ''; ?>">
-                <h2><span>Booking ID:</span> <?php echo htmlspecialchars($booking['BookingID']); ?></h2>
-                <p><span>Username:</span>  <?php echo htmlspecialchars($booking['Username']); ?></p>
-                <p><span>Source:</span>  <?php echo htmlspecialchars($booking['Source']); ?></p>
-                <p><span>Destination:</span>  <?php echo htmlspecialchars($booking['Destination']); ?></p>
-                <p><span>Booking Date:</span>  <?php echo htmlspecialchars($booking['DepartureDate']); ?></p>               
-                <p class="cost"><span>Cost:</span>  ETB <?php echo number_format($price, 2); ?></p>
-                <p class="tax"><span>Tax:</span>  ETB <?php echo number_format($tax, 2); ?></p>
-                <p class="total bb"><span>Total:</span>  ETB <?php echo number_format($cost, 2); ?></p>
-                <?php if ($isExpired): ?>
-                    <p class="days-left bb">Status: Expired</p>
-                <?php else: ?>
-                    <p class="days-left bb">Days Left: <?php echo $daysLeft; ?></p>
-                <?php endif; ?>
+                <h2><span>Booking ID:</span> <?php echo htmlspecialchars($booking['BookingID']); ?></h2>                
+                <div class="dis-flx">
+                    <div>
+                        <p> <?php echo htmlspecialchars($booking['Name']); ?></p>
+                        <p><span>From:</span> <?php echo htmlspecialchars($booking['Source']); ?></p>
+                        <p><span>Seat:</span> <?php echo htmlspecialchars($booking['SeatNumber']); ?></p>             
+                        <p class="cost"><span>Cost:</span>  ETB <?php echo number_format($price, 2); ?></p>
+                    </div>
+                    <div>
+                        <p> <?php echo htmlspecialchars($booking['DepartureDate']); ?></p>                        
+                        <p><span>To:</span> <?php echo htmlspecialchars($booking['Destination']); ?></p> 
+                        <p class="tax"><span>Tax:</span>  ETB <?php echo number_format($tax, 2); ?></p>
+                        <p class="total bb"><span>Total:</span>  ETB <?php echo number_format($cost, 2); ?></p>
+                    </div>
+                        <!-- <?php if ($isExpired): ?>
+                            <p class="days-left bb">Status: Expired</p>
+                        <?php else: ?>
+                            <p class="days-left bb">Days Left: <?php echo $daysLeft; ?></p>
+                        <?php endif; ?> -->
+                </div>
+                <button>Cancel Ticket</button>
+                <h6>HAVE A WONDERFULL TRIP</h6>
             </div>
         <?php endforeach; ?>
     <?php endif; ?>
+  
 </div>
 
  <!-- Footer section of a user -->

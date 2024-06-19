@@ -1,0 +1,49 @@
+.content{
+max-width: 600px;
+margin: 0 auto;
+justify-content: center;
+}
+.content h1{
+    text-align: center;
+    color: #242223;
+    border-bottom: 5px solid #590737;
+    text-transform: uppercase;
+
+}
+.ticket {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    padding: 10px;
+    width: 80%;
+    background-color: #f2f2f2;
+    margin: 20px auto;
+}
+.ticket h2, .ticket h6 {
+    color: #590737;
+    border-bottom: 5px solid #590737;
+}
+.ticket .dis-flx{
+    margin:30px 0 10px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.ticket p {
+    margin: 10px;
+    color: #590737;
+    font: 1.4rem 'Roboto', sans-serif;
+    font-weight: bold;
+}
+.ticket p span{
+    color: #6e6d6d;
+    font: 1.1rem;
+}
+.ticket button{
+    width: 100%;
+    background-color: black;
+    color: white;
+    margin-bottom: 10px;
+}

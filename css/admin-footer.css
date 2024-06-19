@@ -1,0 +1,36 @@
+
+footer{
+    max-width: 600px;
+    margin: 25px auto 10px;
+  }
+  footer #terms{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  footer #terms a{
+    color:#a1824b;
+    text-decoration: none;
+    font-size: 1.3rem;
+    padding: 10px;
+  }
+  footer #socialMediaIcons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: #a1824b;
+  }
+  footer #socialMediaIcons a{
+    color:#a1824b;
+    text-decoration: none;
+    font-size: 1.5rem;
+    padding: 10px;
+  }
+  footer h2{
+    color:#a1824b;
+    text-align: center;
+    font-size: 15px;
+    font-family: sans-serif;
+  }
+  

@@ -49,7 +49,7 @@ $initials = strtoupper(substr($username, 0, 2));
             <a href="edit-user.php" class="btn btn-outline-primary mr-2">Profile</a>
             <a href="#footer" class="btn btn-outline-primary mr-2">Contact</a>            
             <a href="logout.php" class="btn btn-secondary">Logout</a>
-            <div style="border-radius: 50%; padding: 10px; background-color:blue; color:white; font-weight:bold;"> <?php echo htmlspecialchars($initials); ?></div>
+            <div style="border-radius: 50%; padding: 10px; background-color:#007bff; color:white; font-weight:bold;"> <?php echo htmlspecialchars($initials); ?></div>
             <div id="balance" style=" color: green; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-weight: bold;"> ETB <?php echo htmlspecialchars($deposit); ?></div>
         </div>
     </div>

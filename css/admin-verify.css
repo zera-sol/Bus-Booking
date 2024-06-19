@@ -1,0 +1,118 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #fff;
+  color: #333;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: inherit;
+    padding: 10px 20px ;
+    border-bottom: 1px solid #f4efe6;
+}
+.navBar{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+}
+
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #333;
+}
+
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color:rgb(19, 139, 204);
+    color: white;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container {
+  background-color: #fff;
+  width: 70%;
+  padding: 40px;
+  text-align: center;
+  margin: 0 auto;
+}
+.container h1{
+
+  color: #E9DFCE;
+  border-bottom: 5px solid #590737;
+  text-transform: uppercase;
+
+}
+.order-list {
+  padding: 40px 0;
+  border: 2px dashed #E9DFCE;
+  border-radius: 8px;
+}
+
+.order-list p {
+  margin-bottom: 20px;
+  color: #5f5d5d;
+  font-size: 1.4rem;
+}
+.order-list p span{
+  color: #590737;
+  font-weight: bold;
+  margin-left: 50px;
+  font-size: 1.6rem;
+  font-family: cursive;
+}
+.order-list button {
+  background-color: #f0f0f0;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.order-list button:hover {
+  background-color: #e0e0e0;
+}
+.deposit-item button{
+  width: 60%;
+  display: flex;
+  gap: 150px;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px auto;
+}
+.deposit-item button p{
+  margin: 0;
+ font-size: 1.3rem;
+ padding: 0 30px;
+}
+#verify{
+  background-color: #4CAF50;
+  color: white;
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
