@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     try {
         $conn->beginTransaction();
 
-        $stmtUpdateRoute = $conn->prepare("UPDATE Routes SET Source = :source, Destination = :destination, DriverName = :driver_name WHERE RouteID = :route_id");
+        $stmtUpdateRoute = $conn->prepare("UPDATE Routes SET DriverName = :driver_name WHERE RouteID = :route_id");
         $stmtUpdateRoute->bindParam(':route_id', $routeID);
         $stmtUpdateRoute->bindParam(':driver_name', $driverName);
 
@@ -51,10 +51,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $message = "Failed to update route: " . $e->getMessage();
     }
 }
+
 // Fetch routes from the database
 $stmtRoutes = $conn->prepare("SELECT r.RouteID, r.Source, r.Destination, r.DriverName, b.PlateNumber FROM Routes r LEFT JOIN Buses b ON r.BusID = b.BusID");
 $stmtRoutes->execute();
 $routes = $stmtRoutes->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -89,6 +91,41 @@ $routes = $stmtRoutes->fetchAll(PDO::FETCH_ASSOC);
         .error {
             color: red;
         }
+        .route-inputs{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-bottom: 5px;
+        }
+        input{
+            padding: 5px;
+            width:30%;
+            border-bottom: 1px solid #A18249;
+            background-color: #fff;  
+            border-radius: 10px;  
+            font-size: 1.3rem;
+            padding: 0 30px;
+            color: #000;
+        }
+        input:disabled {
+            background-color: #fff; 
+            color: #000; 
+            border: 1px solid #A18249; 
+            cursor: not-allowed; 
+        }
+        #update{
+            padding: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            padding: 10px 20px;
+            width: 10%;
+        }
+        
+        
     </style>
     <script>
         function toggleDetails(routeId) {
@@ -99,6 +136,18 @@ $routes = $stmtRoutes->fetchAll(PDO::FETCH_ASSOC);
                 details.style.display = 'none';
             }
         }
+
+        // Hide message after 5 seconds
+        function hideMessage() {
+            setTimeout(function() {
+                var messageElement = document.getElementById('message');
+                if (messageElement) {
+                    messageElement.style.display = 'none';
+                }
+            }, 5000); // 5000 milliseconds = 5 seconds
+        }
+
+        window.onload = hideMessage;
     </script>
 </head>
 <body>
@@ -119,7 +168,7 @@ $routes = $stmtRoutes->fetchAll(PDO::FETCH_ASSOC);
         <div class="search-container">
             <h1>Manage Routes</h1>
             <?php if (isset($message)): ?>
-                <div class="message <?php echo strpos($message, 'successfully') !== false ? 'success' : 'error'; ?>">
+                <div id="message" class="message <?php echo strpos($message, 'successfully') !== false ? 'success' : 'error'; ?>">
                     <?php echo htmlspecialchars($message); ?>
                 </div>
             <?php endif; ?>
@@ -127,20 +176,28 @@ $routes = $stmtRoutes->fetchAll(PDO::FETCH_ASSOC);
                 <?php foreach ($routes as $route): ?>
                     <div class="deposit-item">
                         <button type="button" onclick="toggleDetails(<?php echo $route['RouteID']; ?>)">
-                            <p>Route <?php echo $route['RouteID']; ?></p>
+                            <p style='margin-left:30%;'><?php echo $route['Source']; ?> - <?php echo $route['Destination']; ?></p>
                         </button>
                         <div id="details-<?php echo $route['RouteID']; ?>" class="deposit-details">
                             <form id="form-<?php echo $route['RouteID']; ?>" method="post" action="">
                                 <input type="hidden" name="route_id" value="<?php echo $route['RouteID']; ?>">
-                                <label for="source-<?php echo $route['RouteID']; ?>">Source:</label>
-                                <input type="text" id="source-<?php echo $route['RouteID']; ?>" name="source" value="<?php echo htmlspecialchars($route['Source']); ?>" disabled>
-                                <label for="destination-<?php echo $route['RouteID']; ?>">Destination:</label>
-                                <input type="text" id="destination-<?php echo $route['RouteID']; ?>" name="destination" value="<?php echo htmlspecialchars($route['Destination']); ?>" disabled>
+                              <div class="route-inputs">
+                                <label for="source-<?php echo $route['RouteID']; ?>">From:</label>
+                                <input type="text" id="source-<?php echo $route['RouteID']; ?>" name="source" value="<?php echo htmlspecialchars($route['Source']); ?>" disabled><br />
+                             </div>
+                             <div class="route-inputs">
+                                <label for="destination-<?php echo $route['RouteID']; ?>">To:</label>
+                                <input type="text" id="destination-<?php echo $route['RouteID']; ?>" name="destination" value="<?php echo htmlspecialchars($route['Destination']); ?>" disabled><br />
+                             </div>
+                             <div class="route-inputs">
                                 <label for="driver-name-<?php echo $route['RouteID']; ?>">Driver Name:</label>
-                                <input type="text" id="driver-name-<?php echo $route['RouteID']; ?>" name="driver_name" value="<?php echo htmlspecialchars($route['DriverName']); ?>" >
+                                <input type="text" id="driver-name-<?php echo $route['RouteID']; ?>" name="driver_name" value="<?php echo htmlspecialchars($route['DriverName']); ?>" ><br />
+                             </div>
+                             <div class="route-inputs">
                                 <label for="bus-plate-number-<?php echo $route['RouteID']; ?>">Bus Plate Number:</label>
-                                <input type="text" id="bus-plate-number-<?php echo $route['RouteID']; ?>" name="bus_plate_number" value="<?php echo htmlspecialchars($route['PlateNumber']); ?>" >
-                                <button type="submit">Update</button>
+                                <input type="text" id="bus-plate-number-<?php echo $route['RouteID']; ?>" name="bus_plate_number" value="<?php echo htmlspecialchars($route['PlateNumber']); ?>" ><br />
+                             </div>
+                                <button type="submit" id="update">Update</button>
                             </form>
                         </div>
                     </div>
