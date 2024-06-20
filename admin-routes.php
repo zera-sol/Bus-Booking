@@ -23,9 +23,39 @@ $username = $user['Username'];
 // Take username's first two letters, capitalize them, and store them in a variable called $initials
 $initials = strtoupper(substr($username, 0, 2));
 
+// Handle form submission for updating route
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $routeID = $_POST['route_id'];
+    $driverName = $_POST['driver_name'];
+    $busPlateNumber = $_POST['bus_plate_number'];
 
+    try {
+        $conn->beginTransaction();
+
+        $stmtUpdateRoute = $conn->prepare("UPDATE Routes SET Source = :source, Destination = :destination, DriverName = :driver_name WHERE RouteID = :route_id");
+        $stmtUpdateRoute->bindParam(':route_id', $routeID);
+        $stmtUpdateRoute->bindParam(':driver_name', $driverName);
+
+        $stmtUpdateRoute->execute();
+
+        $stmtUpdateBus = $conn->prepare("UPDATE Buses SET PlateNumber = :plate_number WHERE BusID = (SELECT BusID FROM Routes WHERE RouteID = :route_id)");
+        $stmtUpdateBus->bindParam(':plate_number', $busPlateNumber);
+        $stmtUpdateBus->bindParam(':route_id', $routeID);
+
+        $stmtUpdateBus->execute();
+
+        $conn->commit();
+        $message = "Route updated successfully";
+    } catch (Exception $e) {
+        $conn->rollBack();
+        $message = "Failed to update route: " . $e->getMessage();
+    }
+}
+// Fetch routes from the database
+$stmtRoutes = $conn->prepare("SELECT r.RouteID, r.Source, r.Destination, r.DriverName, b.PlateNumber FROM Routes r LEFT JOIN Buses b ON r.BusID = b.BusID");
+$stmtRoutes->execute();
+$routes = $stmtRoutes->fetchAll(PDO::FETCH_ASSOC);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,54 +79,25 @@ $initials = strtoupper(substr($username, 0, 2));
         .deposit-details img {
             max-width: 50%;
         }
-        .loading-spinner {
-            display: none;
-            border: 8px solid #f3f3f3;
-            border-radius: 50%;
-            border-top: 8px solid #3498db;
-            width: 50px;
-            height: 50px;
-            -webkit-animation: spin 2s linear infinite;
-            animation: spin 2s linear infinite;
-            margin: auto;
-            margin-top: 20px;
-        }
-
-        @-webkit-keyframes spin {
-            0% { -webkit-transform: rotate(0deg); }
-            100% { -webkit-transform: rotate(360deg); }
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
         .message {
             text-align: center;
             margin: 20px 0;
         }
-
         .success {
             color: green;
         }
-
         .error {
             color: red;
         }
     </style>
     <script>
-        function toggleDetails(depositId) {
-            var details = document.getElementById('details-' + depositId);
+        function toggleDetails(routeId) {
+            var details = document.getElementById('details-' + routeId);
             if (details.style.display === 'none' || details.style.display === '') {
                 details.style.display = 'block';
             } else {
                 details.style.display = 'none';
             }
-        }
-
-        function showSpinner() {
-            document.getElementById('loading-spinner').style.display = 'block';
         }
     </script>
 </head>
@@ -117,37 +118,34 @@ $initials = strtoupper(substr($username, 0, 2));
     <div class="container">
         <div class="search-container">
             <h1>Manage Routes</h1>
-            <div class="order-list">
-                    <div class="deposit-item">
-                            <button>
-                               <p>Route2</p>
-                            </button>
-                            <div id="details" class="deposit-details">
-                                <p>Deposit ID: #<span> <?php echo htmlspecialchars($deposit['DepositID']); ?> </span> </p>
-                                <p>Username: <span><?php echo htmlspecialchars($deposit['Username']); ?> </span> </p>
-                                <p>Amount: ETB <span><?php echo htmlspecialchars($deposit['Amount']); ?> </span> </p>
-                                <div>
-                                    <?php if (!empty($deposit['Receipt'])): ?>
-                                        <img src="data:image/jpeg;base64,<?php echo base64_encode($deposit['Receipt']); ?>" alt="Receipt Image">
-                                    <?php else: ?>
-                                        <p>No receipt available</p>
-                                    <?php endif; ?>
-                                </div>
-                                <form method="post" action="" onsubmit="showSpinner()">
-                                    <input type="hidden" name="deposit_id" value="<?php echo htmlspecialchars($deposit['DepositID']); ?>">
-                                    <button type="submit" name="verify" id="verify">Verify</button>
-                                </form>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-            </div>
-            <div id="loading-spinner" class="loading-spinner"></div>
-            <?php if ($verificationMessage): ?>
-                <div class="message <?php echo strpos($verificationMessage, 'Failed') === false ? 'success' : 'error'; ?>">
-                    <?php echo htmlspecialchars($verificationMessage); ?>
+            <?php if (isset($message)): ?>
+                <div class="message <?php echo strpos($message, 'successfully') !== false ? 'success' : 'error'; ?>">
+                    <?php echo htmlspecialchars($message); ?>
                 </div>
             <?php endif; ?>
+            <div class="order-list">
+                <?php foreach ($routes as $route): ?>
+                    <div class="deposit-item">
+                        <button type="button" onclick="toggleDetails(<?php echo $route['RouteID']; ?>)">
+                            <p>Route <?php echo $route['RouteID']; ?></p>
+                        </button>
+                        <div id="details-<?php echo $route['RouteID']; ?>" class="deposit-details">
+                            <form id="form-<?php echo $route['RouteID']; ?>" method="post" action="">
+                                <input type="hidden" name="route_id" value="<?php echo $route['RouteID']; ?>">
+                                <label for="source-<?php echo $route['RouteID']; ?>">Source:</label>
+                                <input type="text" id="source-<?php echo $route['RouteID']; ?>" name="source" value="<?php echo htmlspecialchars($route['Source']); ?>" disabled>
+                                <label for="destination-<?php echo $route['RouteID']; ?>">Destination:</label>
+                                <input type="text" id="destination-<?php echo $route['RouteID']; ?>" name="destination" value="<?php echo htmlspecialchars($route['Destination']); ?>" disabled>
+                                <label for="driver-name-<?php echo $route['RouteID']; ?>">Driver Name:</label>
+                                <input type="text" id="driver-name-<?php echo $route['RouteID']; ?>" name="driver_name" value="<?php echo htmlspecialchars($route['DriverName']); ?>" >
+                                <label for="bus-plate-number-<?php echo $route['RouteID']; ?>">Bus Plate Number:</label>
+                                <input type="text" id="bus-plate-number-<?php echo $route['RouteID']; ?>" name="bus_plate_number" value="<?php echo htmlspecialchars($route['PlateNumber']); ?>" >
+                                <button type="submit">Update</button>
+                            </form>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
         </div>
     </div>
 </main>
