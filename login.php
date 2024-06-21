@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Express Travel</title>    
     <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="child-container child2">
             <div class="busLogo-text">
                 <img src="https://www.shutterstock.com/image-vector/bus-icon-vector-template-flat-260nw-1413254132.jpg" width="50" height="50" />
-                <h1>Bus Ticket</h1>
+                <h1>Express Travel</h1>
              </div>
              <div id="form-container">
                 <?php if ($error): ?>

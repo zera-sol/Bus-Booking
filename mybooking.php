@@ -6,8 +6,7 @@ require_once './database/database.php';
 if (!isset($_SESSION['id'])) {
     header("Location: login.php");
     exit();
-}
-else if($_SESSION['role'] != 'user'){
+} else if ($_SESSION['role'] != 'user') {
     header("Location: login.php");
     exit();
 }
@@ -19,14 +18,49 @@ $id = $_SESSION['id'];
 $database = new Database();
 $conn = $database->conn;
 
+// Handle the cancellation request
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['bookingID'])) {
+    $bookingID = $_POST['bookingID'];
+
+    // Update the PaymentStatus to 'cancelled'
+    $query = "UPDATE bookings SET PaymentStatus = 'cancelled' WHERE BookingID = :bookingID AND UserID = :userID";
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam(':bookingID', $bookingID);
+    $stmt->bindParam(':userID', $id);
+
+    if ($stmt->execute()) {
+        $message = "Your cancellation process is ongoing. Please wait for some time until approval.";
+    } else {
+        $message = "Failed to cancel booking. Please try again.";
+    }
+}
+
 // Retrieve all bookings for the logged-in user with paymentStatus = 'paid'
 $query = "
-    SELECT b.BookingID, b.DepartureDate, b.SeatNumber, r.Source, r.Destination, r.Cost, u.Name
-    FROM bookings b
-    JOIN routes r ON b.RouteID = r.RouteID
-    JOIN Users u ON b.UserID = u.UserID
-    WHERE b.UserID = :userID AND b.PaymentStatus = 'paid'
-    ORDER BY b.BookingID DESC
+   SELECT 
+    b.BookingID, 
+    b.DepartureDate, 
+    b.SeatNumber, 
+    r.Source, 
+    r.Destination, 
+    r.Cost, 
+    r.DriverName, 
+    u.Name,
+    bs.PlateNumber
+FROM 
+    bookings b
+JOIN 
+    routes r ON b.RouteID = r.RouteID
+JOIN 
+    Users u ON b.UserID = u.UserID
+JOIN 
+    buses bs ON r.BusID = bs.BusID
+WHERE 
+    b.UserID = :userID 
+    AND b.PaymentStatus = 'paid'
+ORDER BY 
+    b.BookingID DESC
+
 ";
 $stmt = $conn->prepare($query);
 $stmt->bindParam(':userID', $id);
@@ -47,15 +81,27 @@ function calculateDaysLeft($departureDate) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BusGo</title>
+    <title>Express Travel</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/navbar.css">
     <link rel="stylesheet" href="./css/mybooking.css">
 </head>
+<script>
+        function hideMessage() {
+            setTimeout(function() {
+                var messageElement = document.getElementById('message');
+                if (messageElement) {
+                    messageElement.style.display = 'none';
+                }
+            }, 8000); // 5000 milliseconds = 5 seconds
+        }
+
+        window.onload = hideMessage;
+    </script>
 <body>
-      <!-- NavBars of a User -->
-      <div class="navbar">
+    <!-- NavBars of a User -->
+    <div class="navbar">
         <div class="logo" style="font-weight: bold; font-size: 1.5rem;">Travel Express</div>
         <div class="laa" style="margin-left: 120px; padding: 5px; border-radius: 5px;"><a href="deposit.php" style="text-decoration: none;">Deposit</a></div>
         <div class="laa" style="margin-left: 30px; padding: 5px; border-radius: 5px;"><a href="mybooking.php" style="text-decoration: none;">My bookings</a></div>
@@ -69,51 +115,53 @@ function calculateDaysLeft($departureDate) {
     </div>
     <hr/>
 
-
-<div class="content">
-    <h1>Your Bookings</h1>
-    <?php if (empty($bookings)): ?>
-        <p>No bookings found.</p>
-    <?php else: ?>
-        <?php foreach ($bookings as $booking): ?>
-            <?php
-            $daysLeft = calculateDaysLeft($booking['DepartureDate']);
-            $isExpired = $daysLeft < 0;
-            $cost = $booking['Cost'];
-            $tax = $cost * 0.15;
-            $price = $cost - $tax;
-            ?>
-            <div class="ticket <?php echo $isExpired ? 'expired' : ''; ?>">
-                <h2><span>Booking ID:</span> <?php echo htmlspecialchars($booking['BookingID']); ?></h2>                
-                <div class="dis-flx">
-                    <div>
-                        <p> <?php echo htmlspecialchars($booking['Name']); ?></p>
-                        <p><span>From:</span> <?php echo htmlspecialchars($booking['Source']); ?></p>
-                        <p><span>Seat:</span> <?php echo htmlspecialchars($booking['SeatNumber']); ?></p>             
-                        <p class="cost"><span>Cost:</span>  ETB <?php echo number_format($price, 2); ?></p>
+    <div class="content">
+        <h1>Your Bookings</h1>
+         
+                <?php if (!empty($message)): ?>
+                    <div class="alert alert-info" id="message"><?php echo htmlspecialchars($message); ?></div>
+                <?php endif; ?>
+                <?php if (empty($bookings)): ?>
+            <p>No bookings found.</p>
+        <?php else: ?>
+            <?php foreach ($bookings as $booking): ?>
+                <?php
+                $daysLeft = calculateDaysLeft($booking['DepartureDate']);
+                $isExpired = $daysLeft < 0;
+                $cost = $booking['Cost'];
+                $tax = $cost * 0.15;
+                $price = $cost - $tax;
+                ?>
+                <div class="ticket <?php echo $isExpired ? 'expired' : ''; ?>">
+                    <h2><span>Booking ID:</span> <?php echo htmlspecialchars($booking['BookingID']); ?></h2>                
+                    <div class="dis-flx">
+                        <div>
+                            <p> <?php echo htmlspecialchars($booking['Name']); ?></p>
+                            <p><span>From:</span> <?php echo htmlspecialchars($booking['Source']); ?></p>
+                            <p><span>Seat:</span> <?php echo htmlspecialchars($booking['SeatNumber']); ?></p>             
+                            <p class="cost"><span>Cost:</span>  ETB <?php echo number_format($price, 2); ?></p>
+                            <p><span>Driver:</span> <?php echo htmlspecialchars($booking['DriverName']); ?></p>   
+                        </div>
+                        <div>
+                            <p> <?php echo htmlspecialchars($booking['DepartureDate']); ?></p>                        
+                            <p><span>To:</span> <?php echo htmlspecialchars($booking['Destination']); ?></p> 
+                            <p class="tax"><span>Tax:</span>  ETB <?php echo number_format($tax, 2); ?></p>
+                            <p class="total bb"><span>Total:</span>  ETB <?php echo number_format($cost, 2); ?></p>
+                            <p><span>Plate No:</span> <?php echo htmlspecialchars($booking['PlateNumber']); ?></p>   
+                        </div>
                     </div>
-                    <div>
-                        <p> <?php echo htmlspecialchars($booking['DepartureDate']); ?></p>                        
-                        <p><span>To:</span> <?php echo htmlspecialchars($booking['Destination']); ?></p> 
-                        <p class="tax"><span>Tax:</span>  ETB <?php echo number_format($tax, 2); ?></p>
-                        <p class="total bb"><span>Total:</span>  ETB <?php echo number_format($cost, 2); ?></p>
-                    </div>
-                        <!-- <?php if ($isExpired): ?>
-                            <p class="days-left bb">Status: Expired</p>
-                        <?php else: ?>
-                            <p class="days-left bb">Days Left: <?php echo $daysLeft; ?></p>
-                        <?php endif; ?> -->
+                    <form method="POST" action="mybooking.php">
+                        <input type="hidden" name="bookingID" value="<?php echo htmlspecialchars($booking['BookingID']); ?>">
+                        <button type="submit" class="cancel-button">Cancel Ticket</button>
+                    </form>
+                    <h6>HAVE A WONDERFUL TRIP</h6>
                 </div>
-                <button>Cancel Ticket</button>
-                <h6>HAVE A WONDERFULL TRIP</h6>
-            </div>
-        <?php endforeach; ?>
-    <?php endif; ?>
-  
-</div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
 
- <!-- Footer section of a user -->
- <footer class="container footer-section" id="footer">
+    <!-- Footer section of a user -->
+    <footer class="container footer-section" id="footer">
         <div class="row">
             <div class="row-box">
                 <div class="footer-title">About Us</div>

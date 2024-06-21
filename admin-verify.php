@@ -76,7 +76,7 @@ $deposits = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Travel Express</title>
     <link rel="stylesheet" href="./css/admin-footer.css">
     <link rel="stylesheet" href="./css/admin-verify.css">
     <style>
@@ -153,7 +153,9 @@ $deposits = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <a href="admin-home.php">Dashboard</a>
             <a href="admin-bookings.php">Check Booking</a>
             <a href="admin-verify.php">Verify Deposit</a>
-            <a href="#">Manage Route</a>
+            <a href="admin-cancell.php">Cancel ticket</a>
+            <a href="admin-routes.php">Manage Route</a>            
+            <a href="logout.php">Logout</a>
             <div class="profile-pic"><?php echo htmlspecialchars($initials); ?></div>
         </nav>
     </div>        

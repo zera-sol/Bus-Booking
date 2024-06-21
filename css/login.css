@@ -17,7 +17,7 @@ body{
 #child-image{
     height: 100vh;
     border: none; 
-    box-shadow: 5px 0px 3px -2px rgba(0, 0, 0, 0.1)
+    box-shadow: 5px 0px 3px -2px rgba(0, 0, 0, 0.1);
 }
 #child-image img{
     margin-top: 100px;

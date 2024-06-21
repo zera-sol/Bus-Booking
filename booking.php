@@ -17,6 +17,8 @@ $success = '';
 
 $id = $_SESSION['id'];
 
+$current_time = date("Y-m-d H:i:s");
+
 // Create an instance of the Database class
 $database = new Database();
 $conn = $database->conn;
@@ -60,11 +62,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $routeID = $row['RouteID'];
 
             // Store the booking details in the Booking table
-            $query = "INSERT INTO bookings (UserID, RouteID, PaymentStatus, DepartureDate) VALUES (:userID, :routeID, 'Pending', :departureDate)";
+            $query = "INSERT INTO bookings (UserID, RouteID, PaymentStatus, DepartureDate, Time) VALUES (:userID, :routeID, 'Pending', :departureDate, :current_time)";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':userID', $id);
             $stmt->bindParam(':routeID', $routeID);
             $stmt->bindParam(':departureDate', $departureDate);
+            $stmt->bindParam(':current_time', $current_time);
 
             if ($stmt->execute()) {
                 $success = "Booking successful!";
@@ -90,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BusGo</title>
+    <title>Travel Express</title>
     <link rel="stylesheet" href="./css/navbar.css">
     <link rel="stylesheet" href="./css/booking.css">
     

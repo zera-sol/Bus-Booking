@@ -87,7 +87,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="admin-home.php">Dashboard</a>
             <a href="admin-bookings.php">Check Bookings</a>
             <a href="admin-verify.php">Verify Deposit</a>
-            <a href="#">Manage Route</a>
+            <a href="admin-cancell.php">Cancel ticket</a>
+            <a href="admin-routes.pjp">Manage Route</a>
+            <a href="logout.php">Logout</a>
             <div class="profile-pic"><?php echo htmlspecialchars($initials); ?></div>
         </nav>
     </div>        
@@ -95,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <main>
     <div class="container">
         <div id="search-box">
-            <h1>Check Booking</h1>
+            <h1>Travel Express</h1>
             <form method="POST" action="">
                 <input type="text" name="username" placeholder="Username">
                 <input type="date" name="date" placeholder="Date">
