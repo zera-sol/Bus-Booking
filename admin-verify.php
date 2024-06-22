@@ -25,40 +25,55 @@ $initials = strtoupper(substr($username, 0, 2));
 
 $verificationMessage = '';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['verify'])) {
-    $depositId = $_POST['deposit_id'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['verify'])) {
+        $depositId = $_POST['deposit_id'];
 
-    // Begin transaction
-    $conn->beginTransaction();
+        // Begin transaction
+        $conn->beginTransaction();
 
-    try {
-        // Update isVerified to true
-        $stmt = $conn->prepare("UPDATE Deposit SET isVerified = 1 WHERE DepositID = :deposit_id");
-        $stmt->bindParam(':deposit_id', $depositId);
-        $stmt->execute();
+        try {
+            // Update isVerified to true
+            $stmt = $conn->prepare("UPDATE Deposit SET isVerified = 1 WHERE DepositID = :deposit_id");
+            $stmt->bindParam(':deposit_id', $depositId);
+            $stmt->execute();
 
-        // Get the amount and user ID from the deposit
-        $stmt = $conn->prepare("SELECT Amount, UserID FROM Deposit WHERE DepositID = :deposit_id");
-        $stmt->bindParam(':deposit_id', $depositId);
-        $stmt->execute();
-        $deposit = $stmt->fetch(PDO::FETCH_ASSOC);
+            // Get the amount and user ID from the deposit
+            $stmt = $conn->prepare("SELECT Amount, UserID FROM Deposit WHERE DepositID = :deposit_id");
+            $stmt->bindParam(':deposit_id', $depositId);
+            $stmt->execute();
+            $deposit = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $amount = $deposit['Amount'];
-        $userId = $deposit['UserID'];
+            $amount = $deposit['Amount'];
+            $userId = $deposit['UserID'];
 
-        // Add the amount to the user's deposit value
-        $stmt = $conn->prepare("UPDATE Users SET Deposit = Deposit + :amount WHERE UserID = :userid");
-        $stmt->bindParam(':amount', $amount);
-        $stmt->bindParam(':userid', $userId);
-        $stmt->execute();
+            // Add the amount to the user's deposit value
+            $stmt = $conn->prepare("UPDATE Users SET Deposit = Deposit + :amount WHERE UserID = :userid");
+            $stmt->bindParam(':amount', $amount);
+            $stmt->bindParam(':userid', $userId);
+            $stmt->execute();
 
-        // Commit transaction
-        $conn->commit();
-        $verificationMessage = 'Deposit verified successfully!';
-    } catch (Exception $e) {
-        // Rollback transaction on error
-        $conn->rollBack();
-        $verificationMessage = 'Failed to verify deposit: ' . $e->getMessage();
+            // Commit transaction
+            $conn->commit();
+            $verificationMessage = 'Deposit verified successfully!';
+        } catch (Exception $e) {
+            // Rollback transaction on error
+            $conn->rollBack();
+            $verificationMessage = 'Failed to verify deposit: ' . $e->getMessage();
+        }
+    } elseif (isset($_POST['decline'])) {
+        $depositId = $_POST['deposit_id'];
+
+        try {
+            // Delete the deposit entry
+            $stmt = $conn->prepare("DELETE FROM Deposit WHERE DepositID = :deposit_id");
+            $stmt->bindParam(':deposit_id', $depositId);
+            $stmt->execute();
+
+            $verificationMessage = 'Deposit request declined and deleted successfully.';
+        } catch (Exception $e) {
+            $verificationMessage = 'Failed to decline deposit: ' . $e->getMessage();
+        }
     }
 }
 
@@ -106,7 +121,14 @@ $deposits = $stmt->fetchAll(PDO::FETCH_ASSOC);
             margin: auto;
             margin-top: 20px;
         }
-
+        #decline{
+            background-color: red;
+            color: white;
+            width: 30%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
         @-webkit-keyframes spin {
             0% { -webkit-transform: rotate(0deg); }
             100% { -webkit-transform: rotate(360deg); }
@@ -154,7 +176,8 @@ $deposits = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <a href="admin-bookings.php">Check Booking</a>
             <a href="admin-verify.php">Verify Deposit</a>
             <a href="admin-cancell.php">Cancel ticket</a>
-            <a href="admin-routes.php">Manage Route</a>            
+            <a href="admin-routes.php">Manage Route</a>
+            <a href="admin-add.php">change Tables</a>              
             <a href="logout.php">Logout</a>
             <div class="profile-pic"><?php echo htmlspecialchars($initials); ?></div>
         </nav>
@@ -162,6 +185,12 @@ $deposits = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </header>
 <main>
     <div class="container">
+    <div id="loading-spinner" class="loading-spinner"></div>
+            <?php if ($verificationMessage): ?>
+                <div class="message <?php echo strpos($verificationMessage, 'Failed') === false ? 'success' : 'error'; ?>">
+                    <?php echo htmlspecialchars($verificationMessage); ?>
+                </div>
+            <?php endif; ?>
         <div class="search-container">
             <h1>Unverified Deposit Requests</h1>
             <div class="order-list">
@@ -187,18 +216,14 @@ $deposits = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <form method="post" action="" onsubmit="showSpinner()">
                                     <input type="hidden" name="deposit_id" value="<?php echo htmlspecialchars($deposit['DepositID']); ?>">
                                     <button type="submit" name="verify" id="verify">Verify</button>
+                                    <input type="hidden" name="deposit_id" value="<?php echo htmlspecialchars($deposit['DepositID']); ?>">
+                                    <button type="submit" name="decline" id="decline">Decline</button>
                                 </form>
                             </div>
                         </div>
                     <?php endforeach; ?>
                 <?php endif; ?>
             </div>
-            <div id="loading-spinner" class="loading-spinner"></div>
-            <?php if ($verificationMessage): ?>
-                <div class="message <?php echo strpos($verificationMessage, 'Failed') === false ? 'success' : 'error'; ?>">
-                    <?php echo htmlspecialchars($verificationMessage); ?>
-                </div>
-            <?php endif; ?>
         </div>
     </div>
 </main>

@@ -128,6 +128,7 @@ try {
             <a href="admin-verify.php">Verify Deposit</a>
             <a href="admin-cancell.php">Cancel ticket</a>
             <a href="admin-routes.php">Manage Route</a>
+            <a href="admin-add.php">change Tables</a>   
             <a href="logout.php">Logout</a>
             <div class="profile-pic"><?php echo htmlspecialchars($initials); ?></div>
         </nav>

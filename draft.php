@@ -18,39 +18,15 @@ $id = $_SESSION['id'];
 $database = new Database();
 $conn = $database->conn;
 
-
-$stmt = $conn->prepare("SELECT * FROM Users WHERE UserID = :userid");
-$stmt->bindParam(':userid', $id);
-$stmt->execute();
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-$username = $user['Username'];
-$email = $user["Email"];
-$phone = $user["Phone"];
-$deposit = $user["Deposit"];
-$Name = $user["Name"];
-
-// Take username's first two letters, capitalize them, and store them in a variable called $initials
-$initials = strtoupper(substr($username, 0, 2));
-
-// Handle the cancellation request
+// Handle the payment request
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['bookingID'])) {
     $bookingID = $_POST['bookingID'];
-
-    // Update the PaymentStatus to 'cancelled'
-    $query = "UPDATE bookings SET PaymentStatus = 'cancelled' WHERE BookingID = :bookingID AND UserID = :userID";
-    $stmt = $conn->prepare($query);
-    $stmt->bindParam(':bookingID', $bookingID);
-    $stmt->bindParam(':userID', $id);
-
-    if ($stmt->execute()) {
-        $message = "Your cancellation process is ongoing. Please wait for some time until approval.";
-    } else {
-        $message = "Failed to cancel booking. Please try again.";
-    }
+    $_SESSION['booking_id'] = $bookingID;
+    header("Location: payment.php");
+    exit();
 }
 
-// Retrieve all bookings for the logged-in user with paymentStatus = 'paid'
+// Retrieve all bookings for the logged-in user with paymentStatus = 'pending'
 $query = "
    SELECT 
     b.BookingID, 
@@ -72,10 +48,9 @@ JOIN
     buses bs ON r.BusID = bs.BusID
 WHERE 
     b.UserID = :userID 
-    AND b.PaymentStatus = 'paid'
+    AND b.PaymentStatus = 'Pending'
 ORDER BY 
     b.BookingID DESC
-
 ";
 $stmt = $conn->prepare($query);
 $stmt->bindParam(':userID', $id);
@@ -99,38 +74,37 @@ function calculateDaysLeft($departureDate) {
     <title>Express Travel</title>
     <link rel="stylesheet" href="./css/navbar.css">
     <link rel="stylesheet" href="./css/mybooking.css">
-</head>
-<script>
+    <script>
         function hideMessage() {
             setTimeout(function() {
                 var messageElement = document.getElementById('message');
                 if (messageElement) {
                     messageElement.style.display = 'none';
                 }
-            }, 8000); // 5000 milliseconds = 5 seconds
+            }, 8000); // 8000 milliseconds = 8 seconds
         }
-
         window.onload = hideMessage;
     </script>
+</head>
 <body>
     <!-- NavBars of a User -->
     <div class="navbar">
         <div class="logo" style="font-weight: bold; font-size: 1.5rem;">Travel Express</div>
-        <div class="laa" style="margin-left: 120px; padding: 5px; border-radius: 5px;"><a href="deposit.php" style="text-decoration: none;">Deposit</a></div>  
-        <div class="laa" style="margin-left: 30px; padding: 5px; border-radius: 5px;"><a href="draft.php" style="text-decoration: none;">Draft</a></div>  
+        <div class="laa" style="margin-left: 120px; padding: 5px; border-radius: 5px;"><a href="deposit.php" style="text-decoration: none;">Deposit</a></div>
+        <div class="laa" style="margin-left: 30px; padding: 5px; border-radius: 5px;"><a href="draft.php" style="text-decoration: none;">Draft</a></div>
         <div class="laa" style="margin-left: 30px; padding: 5px; border-radius: 5px;"><a href="mybooking.php" style="text-decoration: none;">Tickets</a></div>
         <div class="luu" style="width:500px; display: flex; gap:35px; align-items:center; margin-left: 250px;">
             <a href="edit-user.php" class="not-logout">Profile</a>
             <a href="homeloggedin.php" class="not-logout">Home</a>            
             <a href="home.php" style=" background-color: rgb(76, 76, 76); color: white;">Logout</a>
-            <div style="border-radius: 50%; padding: 10px; background-color:rgb(0, 0, 226); color:white; font-weight:bold;"><?php echo htmlspecialchars($initials); ?></div>
-            <div id="balance" style=" color: green; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-weight: bold;"> ETB <?php echo htmlspecialchars($deposit); ?></div>
+            <div style="border-radius: 50%; padding: 10px; background-color:rgb(0, 0, 226); color:white; font-weight:bold;">ZH</div>
+            <div id="balance" style=" color: green; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-weight: bold;"> ETB 45000</div>
         </div>
     </div>
     <hr/>
 
     <div class="content">
-        <h1>Your Bookings</h1>
+        <h1>Unpaid Tickets</h1>
          
                 <?php if (!empty($message)): ?>
                     <div class="alert alert-info" id="message"><?php echo htmlspecialchars($message); ?></div>
@@ -164,9 +138,9 @@ function calculateDaysLeft($departureDate) {
                             <p><span>Plate No:</span> <?php echo htmlspecialchars($booking['PlateNumber']); ?></p>   
                         </div>
                     </div>
-                    <form method="POST" action="mybooking.php">
+                    <form method="POST" action="">
                         <input type="hidden" name="bookingID" value="<?php echo htmlspecialchars($booking['BookingID']); ?>">
-                        <button type="submit" class="cancel-button">Cancel Ticket</button>
+                        <button type="submit" class="cancel-button">Finish Payment</button>
                     </form>
                     <h6>HAVE A WONDERFUL TRIP</h6>
                 </div>

@@ -13,10 +13,24 @@
     }
     // Retrieve the booking ID
     $bookingID = $_SESSION['booking_id'];
+    $id = $_SESSION['id'];
 
     // Create an instance of the Database class
     $database = new Database();
     $conn = $database->conn;
+    $stmt = $conn->prepare("SELECT * FROM Users WHERE UserID = :userid");
+    $stmt->bindParam(':userid', $id);
+    $stmt->execute();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $username = $user['Username'];
+    $email = $user["Email"];
+    $phone = $user["Phone"];
+    $deposit = $user["Deposit"];
+
+// Take username's first two letters, capitalize them, and store them in a variable called $initials
+$initials = strtoupper(substr($username, 0, 2));
+
     
     // Retrieve route ID and departure date for the booking
     $query = "SELECT RouteID, DepartureDate FROM bookings WHERE BookingID = :bookingID";
@@ -108,7 +122,7 @@
 
                     if ($stmt->execute()) {                    
                         $_SESSION['success_message'] = "Booking successful! Your seat number is $seatNumber.";
-                        header("Location: booking.php");
+                        header("Location: mybooking.php");
                         exit();
                     } else {
                         $error = "Failed to update user's deposit.";
@@ -131,23 +145,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Express Travel</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./css/home.css">
+    <link rel="stylesheet" href="./css/navbar.css">
     <link rel="stylesheet" href="./css/booking.css">
     <link rel="stylesheet" href="./css/payment.css">
-    
 </head>
 <body>
-    <div class="navbar">
-        <div class="logo">Travel Express</div>
-        <div class="book-ticket" style="margin-left: 150px;"><a href="#">Deposit</a></div>
-        <div class="book-ticket" style="margin-left: 30px;"><a href="mybooking.php">My bookings</a></div>
-        <div class="ml-auto luu" style="width:500px; display: flex; gap:25px; align-items:center;">
-            <a href="homeloggedin.php" class="btn btn-outline-primary mr-2 btn-secondary">Home</a>
-            <a href="#" class="btn btn-outline-primary mr-2 btn-secondary">Help</a>
-            <a href="#footer" class="btn btn-outline-primary mr-2 btn-secondary">Contact</a> 
-            </div>
+      <!-- Nav bar -->
+<div class="navbar" style="display:flex;justify-content:center; gap:10px;">
+        <div class="logo" style="font-weight: bold; font-size: 1.5rem; width:300px;">Travel Express</div>
+        <div class="laa" style="margin-left: 110px; padding: 5px; border-radius: 5px;"><a href="deposit.php" style="text-decoration: none;">Deposit</a></div>
+        <div class="laa" style="margin-left: 30px; padding: 5px; border-radius: 5px;"><a href="draft.php" style="text-decoration: none;">Draft</a></div>
+        <div class="laa" style="margin-left: 30px; padding: 5px; border-radius: 5px;"><a href="mybooking.php" style="text-decoration: none;">Tickets</a></div>
+        <div class="luu" style="width:500px; display: flex; gap:35px; align-items:center; margin-left: 400px;">
+            <a href="edit-user.php" class="not-logout">Profile</a>
+            <a href="homeloggedin.php" class="not-logout">Home</a>            
+            <a href="home.php" style=" background-color: rgb(76, 76, 76); color: white;">Logout</a>
+            <div style="border-radius: 50%; padding: 10px; background-color:rgb(0, 0, 226); color:white; font-weight:bold;"><?php echo htmlspecialchars($initials); ?></div>
+            <div id="balance" style=" color: green; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-weight: bold;"> ETB <?php echo htmlspecialchars($deposit); ?></div>
+        </div>
     </div>
     <hr/>
     <div class="content">        

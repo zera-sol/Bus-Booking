@@ -44,10 +44,11 @@ $initials = strtoupper(substr($username, 0, 2));
     <div class="navbar">
         <div class="logo">Travel Express</div>
         <div class="book-ticket" style="margin-left: 150px;"><a href="deposit.php">Deposit</a></div>
-        <div class="book-ticket" style="margin-left: 30px;"><a href="mybooking.php">My bookings</a></div>
+        <div class="book-ticket" style="margin-left: 30px;"><a href="draft.php">Draft</a></div>
+        <div class="book-ticket" style="margin-left: 30px;"><a href="mybooking.php">Tickets</a></div>
         <div class="ml-auto luu" style="width:500px; display: flex; gap:25px; align-items:center;">
             <a href="edit-user.php" class="btn btn-outline-primary mr-2">Profile</a>
-            <a href="#footer" class="btn btn-outline-primary mr-2">Contact</a>            
+            <a href="homeloggedin.php" class="btn btn-outline-primary mr-2">Home</a>            
             <a href="logout.php" class="btn btn-secondary">Logout</a>
             <div style="border-radius: 50%; padding: 10px; background-color:#007bff; color:white; font-weight:bold;"> <?php echo htmlspecialchars($initials); ?></div>
             <div id="balance" style=" color: green; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-weight: bold;"> ETB <?php echo htmlspecialchars($deposit); ?></div>

@@ -32,6 +32,7 @@ $username = $user['Username'];
 $email = $user["Email"];
 $phone = $user["Phone"];
 $deposit = $user["Deposit"];
+$Name = $user["Name"];
 
 // Take username's first two letters, capitalize them, and store them in a variable called $initials
 $initials = strtoupper(substr($username, 0, 2));
@@ -100,13 +101,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
       <!-- Nav bar -->
-<div class="navbar">
-        <div class="logo" style="font-weight: bold; font-size: 1.5rem;">Travel Express</div>
-        <div class="laa" style="margin-left: 120px; padding: 5px; border-radius: 5px;"><a href="deposit.php" style="text-decoration: none;">Deposit</a></div>
-        <div class="laa" style="margin-left: 30px; padding: 5px; border-radius: 5px;"><a href="mybooking.php" style="text-decoration: none;">My bookings</a></div>
+<div class="navbar" style="display:flex;justify-content:center; gap:10px;">
+        <div class="logo" style="font-weight: bold; font-size: 1.5rem; width:300px;">Travel Express</div>
+        <div class="laa" style="margin-left: 110px; padding: 5px; border-radius: 5px;"><a href="deposit.php" style="text-decoration: none;">Deposit</a></div>
+        <div class="laa" style="margin-left: 30px; padding: 5px; border-radius: 5px;"><a href="draft.php" style="text-decoration: none;">Draft</a></div>
+        <div class="laa" style="margin-left: 30px; padding: 5px; border-radius: 5px;"><a href="mybooking.php" style="text-decoration: none;">Tickets</a></div>
         <div class="luu" style="width:500px; display: flex; gap:35px; align-items:center; margin-left: 400px;">
             <a href="edit-user.php" class="not-logout">Profile</a>
-            <a href="#footer" class="not-logout">Contact</a>            
+            <a href="homeloggedin.php" class="not-logout">Home</a>            
             <a href="home.php" style=" background-color: rgb(76, 76, 76); color: white;">Logout</a>
             <div style="border-radius: 50%; padding: 10px; background-color:rgb(0, 0, 226); color:white; font-weight:bold;"><?php echo htmlspecialchars($initials); ?></div>
             <div id="balance" style=" color: green; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-weight: bold;"> ETB <?php echo htmlspecialchars($deposit); ?></div>
@@ -137,7 +139,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="trip-form">
                 <form action="booking.php" method="POST" >
                     <label for="user-name" class="label">User name:</label>
-                    <input type="text" name="user-name" value="<?php echo htmlspecialchars($username); ?>" disabled>
+                    <input type="text" name="user-name" value="<?php echo htmlspecialchars($Name); ?>" disabled>
                     <label for="email" class="label">Email:</label>
                     <input type="email" name="email" value="<?php echo htmlspecialchars($email); ?>" disabled>
                     <label for="phone" class="label">Phone:</label>

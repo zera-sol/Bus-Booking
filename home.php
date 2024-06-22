@@ -13,12 +13,12 @@
     <div class="navbar">
         <div class="logo">Travel Express</div>
         <div class="book-ticket" style="margin-left: 150px;"><a href="login.php">Deposit</a></div>
-        <div class="book-ticket" style="margin-left: 30px;"><a href="login.php">My bookings</a></div>
+        <div class="book-ticket" style="margin-left: 30px;"><a href="login.php">Draft</a></div>
+        <div class="book-ticket" style="margin-left: 30px;"><a href="login.php">Tickets</a></div>
         <div class="search-bar">
         </div>
         <div class="ml-auto">
-            <a href="#" class="btn btn-outline-primary mr-2">Help</a>
-            <a href="#footer" class="btn btn-outline-primary mr-2">Contact</a>
+            <a href="home.php" class="btn btn-outline-primary mr-2">Home</a>
             <a href="login.php" class="btn btn-primary mr-2">Sign In</a>
             <a href="register.php" class="btn btn-secondary">Sign Up</a>
             

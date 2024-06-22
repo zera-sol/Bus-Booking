@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="child-container child2">
             <div class="busLogo-text">
                 <img src="https://www.shutterstock.com/image-vector/bus-icon-vector-template-flat-260nw-1413254132.jpg" width="50" height="50" />
-                <h1>Express Travel</h1>
+                <h1>Travel Express</h1>
              </div>
              <div id="form-container">
                 <?php if ($error): ?>
@@ -89,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </form>
              </div>
              <div class="bottom-text">
-                <h3>didn't have an account yet?</h3>
+                <h3>don't have an account yet?</h3>
                 <a href="register.php">Register</a>
             </div>
         </div>
